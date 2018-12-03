@@ -9,6 +9,8 @@ const pv = require('./middleware/koa-pv')
 const index = require('./routes/index')
 const users = require('./routes/users')
 
+const mongoose = require('mongoose')
+const dbConfig = require('./dbs/config')
 // error handler
 onerror(app)
 
@@ -37,6 +39,11 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+
+// 链接数据库
+mongoose.connect(dbConfig.dbs, {
+  useNewUrlParser: true
+})
 
 // error-handling
 app.on('error', (err, ctx) => {

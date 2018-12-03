@@ -5,6 +5,6 @@ function pv(ctx) {
 module.exports = function() {
     return async function(ctx, next) {
         pv(ctx)
-        await next()
+        await next() // 进入下一个中间件
     }
 }

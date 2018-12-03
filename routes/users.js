@@ -27,4 +27,35 @@ router.post('/addPerson', async function(ctx, next) {
   }
 })
 
+router.post('/getPerson', async function(ctx) {
+  const result = await Person.findOne({name: ctx.request.body.name})
+  const results = await Person.find({name: ctx.request.body.name})
+  ctx.body = {
+    status: 200,
+    result,
+    results
+  }
+})
+
+router.post('/updatePerson', async function(ctx) {
+  const result = await Person.where({
+    name: ctx.request.body.name
+  }).update({
+    age: ctx.request.body.age
+  })
+  ctx.body = {
+    code: 200,
+    msg: '更新成功'
+  }
+})
+
+router.post('/removePerson', async function(ctx) {
+  const result = await Person.where({
+    name: ctx.request.body.name
+  }).remove()
+  ctx.body = {
+    code: 200,
+    msg: '删除成功'
+  }
+})
 module.exports = router
